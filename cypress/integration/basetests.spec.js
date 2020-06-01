@@ -1,5 +1,6 @@
 // import {} from
 import vars from "../support/variables";
+import {backToHomePage, legoSearch} from "../support/functions";
 
 describe('', function() {
 
@@ -25,30 +26,21 @@ describe('', function() {
         cy.get(vars.faqTab).click();
         cy.url().should('eq', vars.faqPage);
         cy.contains(vars.faqPageHeader).should('be.visible');
-        cy.get(vars.homePageIcon).click();
-        cy.url().should('eq', vars.homePage);
+        backToHomePage(cy)
     });
 
     it('Search Bar Functionality', function(){
-        cy.get(vars.searchBar).click();
-        cy.get(vars.searchBar).type('Lego');
-        cy.get(vars.searchButton).click();
-        cy.url().should('eq', 'https://www.base.com/fsearch.htm?search=Lego');
-        cy.contains('Results found for : “Lego”').should('be.visible');
+        legoSearch(cy)
         cy.get(vars.searchBar).clear();
         cy.get(vars.searchBar).type('Star Wars');
         cy.get(vars.searchButton).click();
         cy.url().should('eq','https://www.base.com/fsearch.htm?search=Star+Wars');
         cy.contains('Results found for : “Star Wars”').should('be.visible');
-        cy.get(vars.homePageIcon).click();
-        cy.url().should('eq', vars.homePage);
+        backToHomePage(cy)
     });
 
-    it.only('Add Item to Basket and View Item in Basket', function(){
-        cy.get(vars.searchBar).click();
-        cy.get(vars.searchBar).type('Lego');
-        cy.get(vars.searchButton).click();
-        cy.url().should('eq', 'https://www.base.com/fsearch.htm?search=Lego');
+    it('Add Item to Basket and View Item in Basket', function(){
+        legoSearch(cy)
         cy.get(vars.legoMarvel2).click();
         cy.contains('LEGO Marvel Superheroes 2 (Xbox One)').should('be.visible');
         cy.contains('Add to Basket').click();
@@ -56,8 +48,7 @@ describe('', function() {
         cy.get(vars.yourBasket).click();
         cy.url().should('eq', vars.yourBasketPage);
         cy.contains('Your Basket').should('be.visible');
-        cy.get(vars.homePageIcon).click();
-        cy.url().should('eq', vars.homePage);
+        backToHomePage(cy)
     });
 
     // it.skip('', function(){
