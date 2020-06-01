@@ -19,7 +19,7 @@ describe('', function() {
         cy.contains(vars.incorrectDetailsMessage).should('be.visible');
     });
 
-    it.only('Access Help', function(){
+    it('Access Help', function(){
         cy.get(vars.helpButton).click();
         cy.url().should('eq', vars.helpPage);
         cy.get(vars.faqTab).click();
@@ -44,9 +44,22 @@ describe('', function() {
         cy.url().should('eq', vars.homePage);
     });
 
-    // it.skip('', function(){
-    // });
-    //
+    it.only('Add Item to Basket and View Item in Basket', function(){
+        cy.get(vars.searchBar).click();
+        cy.get(vars.searchBar).type('Lego');
+        cy.get(vars.searchButton).click();
+        cy.url().should('eq', 'https://www.base.com/fsearch.htm?search=Lego');
+        cy.get(vars.legoMarvel2).click();
+        cy.contains('LEGO Marvel Superheroes 2 (Xbox One)').should('be.visible');
+        cy.contains('Add to Basket').click();
+        cy.contains('1 item').should('be.visible');
+        cy.get(vars.yourBasket).click();
+        cy.url().should('eq', vars.yourBasketPage);
+        cy.contains('Your Basket').should('be.visible');
+        cy.get(vars.homePageIcon).click();
+        cy.url().should('eq', vars.homePage);
+    });
+
     // it.skip('', function(){
     // });
 
